@@ -27,6 +27,6 @@ Below are the names of the original scripts that were used and modified in this 
 
 ## ATAC Seq Reference Matrix - 
 
-## Building Classifiers - Stanley et al. 2024
+## Predicitive Analyses - Stanley et al. 2024
 
 ## Evaluations
