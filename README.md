@@ -1,5 +1,5 @@
 # cfDNA in Disease Biology
-Source Code of Master's Thesis "XX" by Timo Rieger, February 2025
+Source Code of Master's Thesis "XX" by Timo Rieger, February 2025 completed at Krauthammers Lab.
 
 This git repository provides scripts and detials for the analyses performed in the manuscript "XX".
 
