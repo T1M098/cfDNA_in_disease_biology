@@ -20,6 +20,14 @@ Below are the names of the original scripts that were used and modified in this 
 4. plots.R
 
 
+### Consensus Coding Sequence - Gene Annotation File
+Gene annotation was performed using the consensus coding sequence from Gencode, Gencode Reference 30 (GRCh38) genome. The **main annotation file** in **GFF3** format was downloaded form the official GENCODE website: (GENCODE 30v)[https://www.gencodegenes.org/human/release_30.html]
+
+The original file was modifed to suit the source code from Snyder et al. (2016). The resulting gene annotation file contains 5 columns: ENSG#, chromosome#, start, end and strand (+ or -).
+`zcat gencode.v30.annotation.gff3.gz | awk -F '\t' '$3 == "gene" {split($9, a, ";"); split(a[1], b, "="); split(b[2], c, "."); gsub("chr", "", $1); print c[1], $1, $4, $5, $7}' OFS='\t' > gencode.v30.annotation.tsv`
+
+Furthermore, only active genes were used, thus inactive and long non-coding regions were filtere out. The final gene annotation file contained 31'591 genes (58'870 - 13'160 (inactive regions) - 13'759 (lnc regions)).
+
 
 ## Gene Expression Reference Matrix - Tabula Sapiens
 
