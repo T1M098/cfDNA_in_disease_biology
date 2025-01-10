@@ -27,7 +27,11 @@ The original file was modifed to suit the source code from Snyder et al. (2016).
 
 `zcat gencode.v30.annotation.gff3.gz | awk -F '\t' '$3 == "gene" {split($9, a, ";"); split(a[1], b, "="); split(b[2], c, "."); gsub("chr", "", $1); print c[1], $1, $4, $5, $7}' OFS='\t' > gencode.v30.annotation.tsv`
 
-Furthermore, only active genes were used, thus inactive and long non-coding regions were filtere out. The final gene annotation file contained 31'591 genes (58'870 - 13'160 (inactive regions) - 13'759 (lnc regions)).
+Only active genes were used, thus inactive and long non-coding regions were filtere out. The final gene annotation file contained 31'591 genes (58'870 - 13'160 (inactive regions) - 13'759 (lnc regions)).
+
+Furthermore, the frist 10 kb of each gene (TSS) was used for downstream analysis. This was done by modifing the gene annotation file accordingly:
+
+`cat filtered_annotation_file.tsv | awk 'BEGIN{ FS="\t"; OFS="\t" } NR > 1 { if ($5 == "+") { print $1,$2,$3-1,$3-1+10000,$5 } else { print $1,$2,$4-1-10000,$4-1,$5 } }' > final_annotation_file.tsv`
 
 
 ## Gene Expression Reference Matrix - Tabula Sapiens
