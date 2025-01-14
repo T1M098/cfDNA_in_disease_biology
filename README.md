@@ -35,6 +35,11 @@ Furthermore, the frist 10 kb of each gene (TSS) was used for downstream analysis
 
 
 ## Gene Expression Reference Matrix - Tabula Sapiens
+The Single-cell RNA sequencing data that was downloaded can be found under this link: [Tabula Sapiens Data](https://cellxgene.cziscience.com/collections/e5f58829-1a66-40b5-a624-9046778e74f5). Specifically, the RDS file called "Tabula Sapiens - All cells" was downloaded. More information and tools to visualize the data beforehand can be found under the offical Tabula Sapiens link: [Offical Tabula Sapiens Website](https://tabula-sapiens.sf.czbiohub.org/).
+
+The data was loaded into R V(4:XX) and subset using the "10 x 3" assay (n=412'848 cells). Sperm cells were excluded and an additional metadata column called "cell_type_tissue" was created by concatenating the columns "cell_type" and "tissue_in_publication" resulting in 447 unique identifiers accross 24 biopsied organs. 
+
+
 
 ### Adding Placenta Data
 
