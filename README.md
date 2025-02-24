@@ -1,7 +1,7 @@
 # cfDNA in Disease Biology
 Source Code of Master's Thesis "Integrative Analysis of Cell-free DNA Fragmentation and Single-Cell Omics in Disease Biology" by Timo Rieger, February 2025 completed in Krauthammer's Lab at University Hospital of Zurich.
 
-This git repository provides scripts and detials for the analyses performed in the manuscript "XX".
+This git repository provides scripts and detials for the analyses performed in the manuscript.
 
 _All scripts are provided as is, without any warranty. This description and code is provided in addition to the methods in the original work and should simplify the reproduction of the analyses._
 
