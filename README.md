@@ -104,5 +104,5 @@ The following Python (v3.12.8) and R (v4.4.1) packages were used in this thesis:
 - fmsb 0.7.6
 - umap R
 - uwot 0.2.2
-viridis 0.6.5
-pheatmap 1.0.12
+- viridis 0.6.5
+- pheatmap 1.0.12
