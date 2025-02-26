@@ -72,6 +72,7 @@ They include:
 - rank distribution across compartments and tissue types
 - Wilcoxon rank sum test
 - LOOSVM for all metrics x reference dataset combinations
+- Leave-one-out OvR SVM for FCC x RNA cell type tissue
 - performance evaluation of the SVMs
 
 The results of the performance evaluation are stored in this folder: "_data/evaluation_scores_".
