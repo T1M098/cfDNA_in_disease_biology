@@ -21,7 +21,7 @@ Below are the names of the original scripts that were used and modified in this 
 The scripts used in this work regarding preprocessing for WPS features can be found under "_preprocessing/WPS_".
 
 ### Fragment Center Count (FCC) - Feature Extraction
-To extract the FCC, the first script was modified. Afterwards, the signal was smoothed and the mean was calculated to assign ranks. The respective scripts are in this folder "_preprocessing/FCC_"
+To extract the FCC, the first script was modified. Afterwards, the signal was smoothed and the mean was calculated to assign ranks. The respective scripts are in this folder "_preprocessing/FCC_".
 
 ### Consensus Coding Sequence - Gene Annotation File
 Gene annotation was performed using the consensus coding sequence from Gencode, Gencode Reference 30 (GRCh38) genome. The **main annotation file** in **GFF3** format was downloaded from the official GENCODE website: [GENCODE 30v](https://www.gencodegenes.org/human/release_30.html)
@@ -61,10 +61,10 @@ The necessary scripts are under "_preprocessing/ATAC_vs_RNA_".
 ## Statistical and Predictive Analysis
 For the statistical and predictive analysis, some scripts from Stanley et al.'s study were used and modified.
 
-Link to their Git Repo: [Cell type signatures in cell free DNA fragmentation profiles reveal disease biology](Cell type signatures in cell free DNA fragmentation profiles reveal disease biology)
+Link to their Git Repo: [Cell type signatures in cell free DNA fragmentation profiles reveal disease biology](https://github.com/JorisVermeeschLab/cfDNA_cell_of_origin?tab=readme-ov-file#cell-type-signatures-in-cell-free-dna-fragmentation-profiles-reveal-disease-biology)
 
-The final ranks across features for all metrics x reference dataset combinations can be found in "_data/ranks_" and are used for the downstream analysis.
-In the following folder "_cancer_", all scripts regarding statistical and predicitve analysis about cancer can be found.
+The final ranks across features for all metrics x reference dataset combinations can be found in "_data/ranks_" and are used for downstream analysis.
+In the folder "_cancer_", all scripts regarding statistical and predicitve analysis for cancer can be found.
 
 They include:
 - correlation value distribution across metrics x reference dataset combinations
