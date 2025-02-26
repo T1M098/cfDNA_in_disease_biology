@@ -18,7 +18,7 @@ Below are the names of the original scripts that were used and modified in this 
 3. convert_files.py
 4. plots.R
 
-The scripts used in this work regarding preprocessing for WPS features can be found under "_preprocessing/WPS_"
+The scripts used in this work regarding preprocessing for WPS features can be found under "_preprocessing/WPS_".
 
 ### Fragment Center Count (FCC) - Feature Extraction
 To extract the FCC, the first script was modified. Afterwards, the signal was smoothed and the mean was calculated to assign ranks. The respective scripts are in this folder "_preprocessing/FCC_"
@@ -36,30 +36,36 @@ Furthermore, the frist 10 kb of each gene (TSS) was used for downstream analysis
 
 `cat filtered_annotation_file.tsv | awk 'BEGIN{ FS="\t"; OFS="\t" } NR > 1 { if ($5 == "+") { print $1,$2,$3-1,$3-1+10000,$5 } else { print $1,$2,$4-1-10000,$4-1,$5 } }' > final_annotation_file.tsv`
 
-The final gene annotation file used for the analysis is in the data folder: "_data_"
+The final gene annotation file used for the analysis is in the data folder: "_data_".
 
 ## Gene Expression Reference Matrix - Tabula Sapiens
 The Single-cell RNA sequencing data that was downloaded can be found under this link: [Tabula Sapiens Data](https://cellxgene.cziscience.com/collections/e5f58829-1a66-40b5-a624-9046778e74f5). Specifically, the RDS file called "Tabula Sapiens - All cells" was downloaded. More information and tools to visualize the data beforehand can be found under the offical Tabula Sapiens link: [Offical Tabula Sapiens Website](https://tabula-sapiens.sf.czbiohub.org/).
 
 The data was loaded into R V(4:XX) and subset using the "10 x 3" assay (n=412'848 cells). Sperm cells were excluded and an additional metadata column called "cell_type_tissue" was created by concatenating the columns "cell_type" and "tissue_in_publication" resulting in 447 unique identifiers accross 24 biopsied organs.
 
-The script to filter the Tabula Sapiens data can be found under "_preprocessing/00_preprocessing_Tabula_Sapiens_filtered.R"
+The script to filter the Tabula Sapiens data can be found under "_preprocessing/00_preprocessing_Tabula_Sapiens_filtered.R".
 
 ## Adding Placenta Cells
 Placenta cells were added to the Tabula Sapiens reference dataset to perform the analysis on another dataset containing preeclampsia samples collected from the University Hospital of Zurich.
+
 Two datasets containing placenta specific cells were downloaded:
  - [Placenta Dataset: ArrayExpress (E-MTAB-6701)](https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-6701)
-- [Fetal Cell Atlas](https://descartes.brotmanbaty.org/bbi/human-gene-expression-during-development/
+- [Fetal Cell Atlas](https://descartes.brotmanbaty.org/bbi/human-gene-expression-during-development/)
 
 The scripts regarding placenta data integration and preeclampsia classifier can be found on the following folder: "_preeclampsia_".
 
 ## ATAC-Seq Reference Matrix
 For the comparison of different reference data types, the ATAC-Seq data from [Zhang et al. (2021)](https://pubmed.ncbi.nlm.nih.gov/34774128/) was used.
-The necessary scripts are under "_preprocessing/ATAC_vs_RNA_"
+The necessary scripts are under "_preprocessing/ATAC_vs_RNA_".
 
 ## Statistical and Predictive Analysis
+For the statistical and predictive analysis, some scripts from Stanley et al.'s study were used and modified.
+
+Link to their Git Repo: [Cell type signatures in cell free DNA fragmentation profiles reveal disease biology](Cell type signatures in cell free DNA fragmentation profiles reveal disease biology)
+
 The final ranks across features for all metrics x reference dataset combinations can be found in "_data/ranks_" and are used for the downstream analysis.
 In the following folder "_cancer_", all scripts regarding statistical and predicitve analysis about cancer can be found.
+
 They include:
 - correlation value distribution across metrics x reference dataset combinations
 - unsupervised clustering UMAP
@@ -69,6 +75,7 @@ They include:
 - performance evaluation of the SVMs
 
 The results of the performance evaluation are stored in this folder: "_data/evaluation_scores_".
+
 The average feature weights of the primary SVM model FCC x RNA cell type tissue can be found in this folder "_data/feature_weights_".
 
 ## Version and Dependencies
