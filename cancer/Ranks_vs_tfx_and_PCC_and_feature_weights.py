@@ -17,7 +17,6 @@ import seaborn as sns
 from matplotlib import cm
 import textwrap
 import os
-import textwrap
 import matplotlib.cm as cm
 
 data = pd.read_csv("/data/ranks/Ranks_FCC_RNA_cell_type_tissue.csv")
