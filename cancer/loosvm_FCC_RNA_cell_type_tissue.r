@@ -129,6 +129,20 @@ for (cancer_type in cancer_types) {
     
     alltruegroup <- factor(alltruegroup, levels = c(2, 1), labels = c("Control", "Cancer"))
     allpredval <- factor(allpredval, levels = c(2, 1), labels = c("Control", "Cancer"))
+    prediction_results_cancer <- data.frame(
+        CancerType = cancer_type,  # Track the cancer type
+        Sample = orgroup,  # Sample names
+        TumorFraction = combined$tfx[match(orgroup, combined$group)],  # Match tumor fraction
+        TrueLabel = alltruegroup,  # Actual status
+        PredictedLabel = allpredval,  # Predicted status
+        DecisionValue = allpredgroup  # Decision values from SVM
+    )
+
+    if (!exists("prediction_results_all")) {
+        prediction_results_all <- prediction_results_cancer  # Create new dataframe if first iteration
+    } else {
+        prediction_results_all <- rbind(prediction_results_all, prediction_results_cancer)  # Append results
+    }
     
     # Calculate performance metrics
     svmperfm <- roc(response = alltruegroup, predictor = allpredgroup, ci = TRUE)
@@ -171,9 +185,72 @@ for (cancer_type in cancer_types) {
         pos = 4, cex = 1.0, col = "black")
 }
 
+all_cancer_data <- data.frame()
+
+# Iterate over each cancer type and collect the data
+for (cancer_type in cancer_types) {
+    # Filter for only cancer samples of that type
+    cancer_data <- prediction_results_all %>%
+      filter(CancerType == cancer_type & TrueLabel == "Cancer")
+    
+    # Create the TumorBin column based on TumorFraction
+    cancer_data <- cancer_data %>%
+      mutate(TumorBin = cut(TumorFraction, 
+                            breaks = c(0, 0.01, 0.02, 1),
+                            labels = c("Low", "Medium", "High"),
+                            include.lowest = TRUE),
+             CancerType = cancer_type)  # Add the CancerType column
+    
+    # Append to the main dataset
+    all_cancer_data <- rbind(all_cancer_data, cancer_data)
+}
+
+## Plot sensitivity across estimated tumor levels
+all_cancer_data <- all_cancer_data %>%
+  mutate(CancerType = str_replace(CancerType, "(?i) cancer$", " C."))
+# Reorder
+custom_order <- c("Bile Duct C.", "Colorectal C.", "Lung C.", "Ovarian C.", "Gastric C.", "Pancreatic C.", "Breast C.")
+
+all_cancer_data <- all_cancer_data %>%
+  mutate(CancerType = factor(CancerType, levels = custom_order))
+
+all_cancer_data <- all_cancer_data %>%
+  mutate(TumorBin = factor(TumorBin, levels = c("High", "Medium", "Low")))
+
+# Calculate sensitivity for each cancer type and tumor fraction level
+sensitivity_by_bin <- all_cancer_data %>%
+  group_by(CancerType, TumorBin) %>%
+  summarise(Sensitivity = mean((TrueLabel == "Cancer") & (PredictedLabel == "Cancer")),
+            N = n(), .group = "drop")
+
+# Plotting
+plot <- ggplot(sensitivity_by_bin, aes(x = CancerType, y = Sensitivity, fill = TumorBin)) +
+  geom_bar(stat = "identity", position = "dodge", color = "black") +  # Dodge position to separate bars for each TumorBin
+  geom_text(aes(label = N), position = position_dodge(width = 0.8), vjust = -0.5, size = 5) +  # Correct position of labels above bars
+  theme_minimal() +
+  labs(title = "",
+       x = NULL,  # Remove the x-axis label
+       y = "Sensitivity",
+       fill = "Tumor Fraction") +
+  scale_fill_viridis(discrete = TRUE, guide = guide_legend(reverse = FALSE), direction = -1) +
+  theme(
+    plot.title = element_text(size = 16, face = "plain", hjust = 0.5),  
+    axis.title.x = element_blank(),  # Remove x-axis title
+    axis.title.y = element_text(size = 15),  
+    axis.text.x = element_text(size = 14, angle = 45, hjust = 1, vjust = 1, margin = margin(t = 10)),  
+    axis.text.y = element_text(size = 14),
+    legend.title = element_text(size = 16),  
+    legend.text = element_text(size = 14)
+  ) +
+  scale_y_continuous(
+    limits = c(0, 1.1),
+    breaks = seq(0, 1, by = 0.25),  # Define the breaks from 0 to 1 with step size 0.25
+    expand = c(0, 0)
+  )
+
+# ggsave("/plots/sensitivity_tumor_fraction_2.pdf", plot = plot, width = 13, height = 6)
 
 metrics_table$ref_data_type = "rna_ct_tissue"
-
 # Save the table to a file
 # write.csv(metrics_table, file = "/outputs/eva_metrics/FCC_RNA_cell_type_tissue_eva_metrics_table.csv", row.names = FALSE)
 
